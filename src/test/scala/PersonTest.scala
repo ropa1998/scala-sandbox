@@ -55,5 +55,52 @@ class PersonTest extends FunSuite {
     assert(!olderThanList.contains(ernesto))
   }
 
+  test("Person.getChildless with one childless person works") {
+    val juan: Person = new Person("Juan", 17, Nil)
+    assert(juan.getChildless() == List(juan))
+  }
+
+  test("Person.getChildless with one person with one child works") {
+    val juan: Person = new Person("Juan", 17, Nil)
+    val pepe: Person = new Person("Pepe", 50, List(juan))
+    assert(pepe.getChildless() == List(juan))
+  }
+
+  test("Person.getChildless with various persons works") {
+    val juan: Person = new Person("Juan", 17, Nil)
+    val pepe: Person = new Person("Pepe", 50, List(juan))
+    val ernesto: Person = new Person("Ernesto", 17, Nil)
+    val lujan: Person = new Person("Lujan", 50, List(ernesto))
+    val ricardo: Person = new Person("Ricardo", 70, List(pepe, lujan))
+    val childlessList: List[Person] = ricardo.getChildless()
+    assert(childlessList.contains(juan))
+    assert(childlessList.contains(ernesto))
+  }
+
+  test("Person.getTwins with one childless person works") {
+    val juan: Person = new Person("Juan", 17, Nil)
+    assert(juan.getTwins() == Nil)
+  }
+
+  test("Person.getTwins with one person with a pair of twins works") {
+    val juan: Person = new Person("Juan", 17, Nil)
+    val ernesto: Person = new Person("Ernesto", 17, Nil)
+    val pepe: Person = new Person("Pepe", 50, List(juan, ernesto))
+    assert(pepe.getTwins().contains(juan))
+    assert(pepe.getTwins().contains(ernesto))
+  }
+
+  test("Person.getPersonsWithChildrenWithNAgeAverage with one childless person") {
+    val juan: Person = new Person("Juan", 17, Nil)
+    assert(juan.getPersonsWithChildrenWithNAgeAverage(4) == Nil)
+  }
+
+  test("Person.getPersonsWithChildrenWithNAgeAverage with a family works") {
+    val juan: Person = new Person("Juan", 4, Nil)
+    val pepe: Person = new Person("Pepe", 4, Nil)
+    val ernesto: Person = new Person("Ernesto", 17, List(juan, pepe))
+    assert(ernesto.getPersonsWithChildrenWithNAgeAverage(4).contains(ernesto))
+  }
+
 
 }
