@@ -102,5 +102,13 @@ class PersonTest extends FunSuite {
     assert(ernesto.getPersonsWithChildrenWithNAgeAverage(4).contains(ernesto))
   }
 
+  test("flatten test") {
+    val firstList: List[Int] = List(1, 2)
+    val secondList = List(List(7, 8), firstList)
+    val flatList = secondList.flatten
+    println(flatList)
+    assert(flatList == List(7, 8, 1, 2))
+  }
+
 
 }
