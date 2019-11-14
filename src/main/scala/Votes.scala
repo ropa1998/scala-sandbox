@@ -28,13 +28,18 @@ object VoteUtil {
       val totalVotes: Int = cand._2.map(x => x.votes).sum
       finalMap = finalMap + (cand._1 -> totalVotes)
     }
-    println(finalMap)
     finalMap.maxBy(_._2)._1
   }
 
 
-  def getBestProvinceFor(value: "A", votes: List[Vote]) = {
-
+  def getBestProvinceFor(value: String, votes: List[Vote]) = {
+    val candidateVotesByProvince = votes.groupBy(_.candidate)(value).groupBy(_.province)
+    var finalMap: Map[String, Int] = Map()
+    for (prov <- candidateVotesByProvince) {
+      val totalVotesByProvince = prov._2.foldRight(0)(_.votes + _)
+      finalMap = finalMap + (prov._1 -> totalVotesByProvince)
+    }
+    finalMap.maxBy(_._2)._1
   }
 
 
@@ -44,11 +49,17 @@ object Votes extends App {
 
   import VoteUtil._
 
-  val votes: List[Vote] = readVotes("/home/rodrigo/projects/scala-sandbox/src/main/scala/resources/votes.txt")
-  println(votes)
+  val votes: List[Vote] = readVotes("src/main/scala/resources/votes.txt")
 
   val totalVotes: Int = countVotes(votes)
   val winner = getWinner(votes)
   val bestProvinceForA = getBestProvinceFor("A", votes)
+
+  val bestProvinceForC = getBestProvinceFor("C", votes)
+
+  println(totalVotes)
+  println(winner)
+  println(bestProvinceForA)
+  println(bestProvinceForC)
 
 }

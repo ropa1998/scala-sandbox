@@ -4,4 +4,4 @@ Buenos Aires,Pilar,C,1700
 Buenos Aires,San Isidro,A,2400
 Buenos Aires,San Isidro,B,3100
 Buenos Aires,San Isidro,C,2500
-Cordoba,Cordoba,C,2500
+Cordoba,Cordoba,C,100000
